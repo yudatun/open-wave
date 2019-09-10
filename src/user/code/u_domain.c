@@ -1470,6 +1470,11 @@ u__domainOpen(
        uri = os_strdup("osplcfg://ospl.xml");
     }
 #endif
+#ifdef ANDROID
+    if (uri == NULL) {
+        uri = os_strdup("file:///system/etc/ospl.xml");
+    }
+#endif
 
     /* Iinialize domain config and load from uri if specified. */
     result = checkDomainId(id);
@@ -1528,7 +1533,7 @@ u__domainOpen(
     if (result == U_RESULT_OK) {
         if (domainCfg.heap) {
             /* Startup Single process Domain. */
-            u_userSetupSignalHandling(FALSE); /* Start the signal handler to only handle exit signals */
+            //u_userSetupSignalHandling(FALSE); /* Start the signal handler to only handle exit signals */
             *domain = startProcessDomain(&domainCfg);
         } else {
             /* On a regular exit of an application, all SHM entities should

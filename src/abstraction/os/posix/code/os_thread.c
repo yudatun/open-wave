@@ -422,7 +422,11 @@ os_threadCreate (
            pthread_attr_setscope (&attr, PTHREAD_SCOPE_SYSTEM) != 0 ||
 #endif
            pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_JOINABLE) != 0 ||
+#ifdef PTHREAD_SET_INHERIT_SCHED
            pthread_attr_setinheritsched (&attr, PTHREAD_EXPLICIT_SCHED) != 0)
+#else
+           0)
+#endif
        {
           rv = os_resultFail;
        }

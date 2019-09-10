@@ -29,7 +29,9 @@
 #include "cfg_metaConfigParser.h"
 #include "cfg_validator.h"
 
+#ifndef CONFIG_SYNTAX_FILE_NAME
 #define CONFIG_SYNTAX_FILE_NAME "ospl_metaconfig.xml"
+#endif
 #define CONFIG_SYNTAX_FILE_NAME_PREFIX  "splice_metaconfig_"
 #define CONFIG_SYNTAX_FILE_NAME_POSTFIX ".1.xml"
 #define CONFIG_VALIDATION_DISABLED "OSPL_CONFIG_VALIDATION_DISABLED"
@@ -544,12 +546,12 @@ validateServiceCommand(
 
     assert(configRoot);
     assert(name);
-    
+
     fullname = os_locate(command, OS_ROK | OS_XOK);
     if (!fullname) {
         cont = FALSE;
     }
-    os_free(fullname);    
+    os_free(fullname);
 
     list = cfg_elementGetChildren(context->services);
     if (list) {
@@ -567,7 +569,7 @@ validateServiceCommand(
                             OS_REPORT_WID(OS_INFO, "configuration validator", 0, context->domainId,
                                               "Element <Service name=\"%s\"><Command>%s<Command></Service> command '%s' is non-default for service %s but executable, accepting it as valid command",
                                               name, command, command, foundName);
-                            
+
                         }
                         os_free(foundName);
                     }
@@ -577,7 +579,7 @@ validateServiceCommand(
             c_iterFree(nodeList);
         }
     }
-    
+
 
     return result;
 
